@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compartimientos Líquidos Corporales, Medio Interno e Integración en Enfermería | FCM UCCuyo</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: {
+              DEFAULT: '#436600',
+              light: '#f1f6eb',
+              dark: '#2c4400',
+              hover: '#385500'
+            },
+            plasma: '#f59e0b',
+            arterial: '#ef4444',
+            venous: '#3b82f6',
+            interstitial: '#06b6d4',
+            cell: '#10b981'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- KaTeX for formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f7f9f6;
+      color: #1f2937;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tab-btn.active {
+      background-color: #436600 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 6px -1px rgba(67, 102, 0, 0.2), 0 2px 4px -2px rgba(67, 102, 0, 0.2);
+    }
+    .tab-btn.active i, .tab-btn.active span {
+      color: #ffffff !important;
+    }
+    .tab-btn:not(.active) {
+      background-color: #ffffff;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+    }
+    .tab-btn:not(.active):hover {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    .tab-btn:not(.active) i {
+      color: #436600;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .interactive-card {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .interactive-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between custom-scrollbar selection:bg-accent/20">
+
+  <!-- ==================== CABECERA INSTITUCIONAL UCCUYO ==================== -->
+  <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-xl shadow-md">
+          CB
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-gray-800 tracking-wide uppercase">CIENCIAS BIOLÓGICAS EN SALUD</h1>
+          <p class="text-xs text-gray-500 font-semibold">Curso de Ingreso a la Licenciatura en Enfermería (Facultad de Ciencias Médicas - UCCuyo)</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Botón Vademécum Teórico -->
+        <button onclick="openFormulasModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg border border-gray-200 hover:bg-gray-200 transition">
+          <i class="fa-solid fa-book-bookmark text-accent"></i>
+          <span class="hidden sm:inline">Vademécum</span>
+        </button>
+        <!-- Botón Guía de Uso -->
+        <button onclick="openTutorial()" class="flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-lg shadow-sm hover:bg-accent-hover transition">
+          <i class="fa-solid fa-circle-question"></i>
+          <span>Guía de Uso</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== CONTENEDOR PRINCIPAL CON SIDEBAR ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-grow">
+    <div class="flex flex-col lg:flex-row gap-6">
+
+      <!-- SIDEBAR DE NAVEGACIÓN VERTICAL STICKY -->
+      <nav id="navTabs" class="w-full lg:w-64 flex-shrink-0 flex lg:flex-col gap-1.5 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 z-10 sticky top-[73px]">
+        <button onclick="switchTab('modulo1')" id="tab-btn-modulo1" class="tab-btn active w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-bold transition-all text-left whitespace-nowrap">
+          <i class="fa-solid fa-chart-pie text-sm w-4 text-center"></i>
+          <span>1. Agua Corporal (ACT)</span>
+        </button>
+
+        <button onclick="switchTab('modulo2')" id="tab-btn-modulo2" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-bold transition-all text-left whitespace-nowrap">
+          <i class="fa-solid fa-arrows-split-up-and-left text-sm w-4 text-center"></i>
+          <span>2. Flujo Microvascular</span>
+        </button>
+
+        <button onclick="switchTab('modulo3')" id="tab-btn-modulo3" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-bold transition-all text-left whitespace-nowrap">
+          <i class="fa-solid fa-heart-pulse text-sm w-4 text-center"></i>
+          <span>3. Sinergia Sistémica</span>
+        </button>
+
+        <button onclick="switchTab('modulo4')" id="tab-btn-modulo4" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-bold transition-all text-left whitespace-nowrap">
+          <i class="fa-solid fa-user-nurse text-sm w-4 text-center"></i>
+          <span>4. Práctica de Enfermería</span>
+        </button>
+
+        <button onclick="switchTab('modulo5')" id="tab-btn-modulo5" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-bold transition-all text-left whitespace-nowrap">
+          <i class="fa-solid fa-cubes-stacked text-sm w-4 text-center"></i>
+          <span>5. Niveles de Organización</span>
+        </button>
+
+        <button onclick="switchTab('retos')" id="tab-btn-retos" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-bold transition-all text-left whitespace-nowrap">
+          <i class="fa-solid fa-trophy text-amber-500 text-sm w-4 text-center"></i>
+          <span class="flex-grow">6. Retos & Casos</span>
+          <span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded-full font-bold">3 Retos</span>
+        </button>
+      </nav>
+
+      <!-- ÁREA DE CONTENIDO -->
+      <div class="flex-grow min-w-0">
+
+    <!-- ==================== MÓDULO 1: DISTRIBUCIÓN DEL AGUA CORPORAL TOTAL ==================== -->
+    <section id="modulo1" class="tab-content block space-y-6">
+      
+      <!-- Module 1 Intro Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-accent">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-accent text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span>Módulo 1 • Fundamento Fisiológico Primario</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">
+              Distribución del Agua Corporal Total (ACT)
+            </h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+              El agua es el componente mayoritario del organismo (~60% del peso en un adulto sano). <strong>No se distribuye de manera uniforme</strong>: se organiza en dos grandes compartimientos dinámicos delimitados por membranas biológicas: el <strong>Líquido Intracelular (LIC)</strong> y el <strong>Líquido Extracelular (LEC)</strong>.
+            </p>
+          </div>
+          <div class="bg-accent-light border border-accent/30 p-3.5 rounded-xl flex items-center space-x-3 self-start md:self-auto shrink-0">
+            <i class="fa-solid fa-droplet text-accent text-2xl"></i>
+            <div>
+              <p class="text-[11px] text-accent uppercase font-bold">Ecuación Fundamental</p>
+              <p class="text-xs text-slate-700 font-mono">$$\text{ACT} = \text{LIC} + \text{LEC}$$</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulador interactivo de proporciones corporales -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Control e infografía de volúmenes -->
+        <div class="lg:col-span-5 glass-card rounded-2xl p-5 border border-slate-200 space-y-5">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-accent"></i> Calculador de Paciente Modelo
+            </h3>
+            <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600 font-medium">Adulto Estándar (60% ACT)</span>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Peso del Paciente: <span id="weight-display" class="text-accent font-bold text-base">70 kg</span></label>
+            <input type="range" id="weight-slider" min="40" max="120" value="70" step="5" class="w-full accent-[#436600] cursor-pointer">
+            <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+              <span>40 kg</span>
+              <span>70 kg (Referencia)</span>
+              <span>120 kg</span>
+            </div>
+          </div>
+
+          <!-- Desglose numérico en tiempo real -->
+          <div class="space-y-3 pt-2">
+            <div class="p-3 bg-blue-50/70 border border-blue-200 rounded-xl">
+              <div class="flex justify-between text-xs font-semibold text-blue-900">
+                <span>Agua Corporal Total (~60%):</span>
+                <span id="act-val" class="font-bold text-blue-700">42.0 Litros</span>
+              </div>
+              <div class="w-full bg-blue-200 h-2 rounded-full mt-1.5 overflow-hidden">
+                <div class="bg-blue-600 h-full w-full"></div>
+              </div>
+            </div>
+
+            <div class="p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+              <div class="flex justify-between text-xs font-semibold text-emerald-900">
+                <span>Líquido Intracelular (LIC) (~2/3 del ACT - 67%):</span>
+                <span id="lic-val" class="font-bold text-emerald-700">28.0 Litros</span>
+              </div>
+              <p class="text-[11px] text-emerald-800 mt-1">Compartimento más voluminoso. Dentro de la célula con iones ($K^+$, $Mg^{2+}$), proteínas y nutrientes para el metabolismo celular.</p>
+            </div>
+
+            <div class="p-3 bg-cyan-50/70 border border-cyan-200 rounded-xl space-y-2">
+              <div class="flex justify-between text-xs font-semibold text-cyan-900">
+                <span>Líquido Extracelular (LEC) (~1/3 del ACT - 33%):</span>
+                <span id="lec-val" class="font-bold text-cyan-700">14.0 Litros</span>
+              </div>
+              <p class="text-[11px] text-cyan-800">El verdadero <strong>Medio Interno</strong>. Puente de intercambio entre el lecho vascular y las células.</p>
+              
+              <!-- Subdivisión del LEC -->
+              <div class="grid grid-cols-2 gap-2 pt-1 border-t border-cyan-200/80">
+                <div class="bg-white/80 p-2 rounded-lg border border-cyan-100">
+                  <div class="flex items-center gap-1 text-[11px] font-bold text-cyan-800">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-500"></span> Intersticial (~80%)
+                  </div>
+                  <div id="interstitial-val" class="text-xs font-black text-cyan-700 mt-0.5">11.2 L</div>
+                  <p class="text-[10px] text-slate-500">Baña las células tisulares.</p>
+                </div>
+                <div class="bg-white/80 p-2 rounded-lg border border-amber-200">
+                  <div class="flex items-center gap-1 text-[11px] font-bold text-amber-800">
+                    <span class="w-2.5 h-2.5 rounded-full bg-plasma"></span> Plasma (~20%)
+                  </div>
+                  <div id="plasma-val" class="text-xs font-black text-amber-700 mt-0.5">2.8 L</div>
+                  <p class="text-[10px] text-slate-500">Porción líquida vascular.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Diagrama anatómico visual de recipientes -->
+        <div class="lg:col-span-7 glass-card rounded-2xl p-5 border border-slate-200 flex flex-col justify-between">
+          <div class="border-b pb-3 flex justify-between items-center">
+            <h3 class="font-bold text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-shapes text-cyan-600"></i> Mapa Topológico de los Líquidos
+            </h3>
+            <span class="text-xs text-slate-500">Haz clic en cada área para explorar su composición</span>
+          </div>
+
+          <!-- Representación interactiva modular -->
+          <div class="my-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- LIC Container -->
+            <div onclick="showCompartmentDetail('lic')" class="cursor-pointer transition transform hover:-translate-y-1 bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-400/80 rounded-2xl p-4 shadow-sm hover:shadow-md relative overflow-hidden group">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs uppercase font-extrabold text-emerald-800 tracking-wider">Líquido Intracelular (LIC)</span>
+                <span class="text-xs bg-emerald-600 text-white font-bold px-2 py-0.5 rounded-full">~67% del ACT</span>
+              </div>
+              <div class="h-32 bg-emerald-100/60 rounded-xl border border-emerald-200 p-3 flex flex-col justify-between relative overflow-hidden">
+                <div class="flex items-center gap-2 text-emerald-900 font-bold text-sm">
+                  <i class="fa-solid fa-dna text-emerald-600"></i> Interior de billones de células
+                </div>
+                <div class="space-y-1 text-xs text-emerald-800">
+                  <div class="flex items-center gap-1.5"><i class="fa-solid fa-check text-[10px] text-emerald-600"></i> Compartimento más voluminoso</div>
+                  <div class="flex items-center gap-1.5"><i class="fa-solid fa-check text-[10px] text-emerald-600"></i> Rápido metabolismo enzimático</div>
+                  <div class="flex items-center gap-1.5"><i class="fa-solid fa-check text-[10px] text-emerald-600"></i> Riqueza en proteínas y fosfatos</div>
+                </div>
+                <span class="text-[10px] text-emerald-700 font-semibold self-end group-hover:underline">Explorar solutos e importancia &rarr;</span>
+              </div>
+            </div>
+
+            <!-- LEC Container -->
+            <div class="bg-gradient-to-br from-cyan-50 to-sky-50 border-2 border-cyan-400/80 rounded-2xl p-4 shadow-sm space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs uppercase font-extrabold text-sky-800 tracking-wider">Líquido Extracelular (LEC)</span>
+                <span class="text-xs bg-sky-600 text-white font-bold px-2 py-0.5 rounded-full">~33% del ACT</span>
+              </div>
+
+              <!-- Sub-compartimientos del LEC -->
+              <div class="grid grid-cols-1 gap-2">
+                <!-- Líquido Intersticial -->
+                <div onclick="showCompartmentDetail('intersticio')" class="cursor-pointer transition transform hover:scale-[1.02] bg-cyan-100/70 border border-cyan-300 rounded-xl p-3 group">
+                  <div class="flex justify-between items-center text-xs font-bold text-cyan-900">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-water text-cyan-600"></i> Líquido Intersticial</span>
+                    <span class="text-cyan-700 font-extrabold text-[11px]">80% del LEC</span>
+                  </div>
+                  <p class="text-[11px] text-cyan-800 mt-1">Baña y envuelve directamente a las células tisulares. Es el puente continuo de difusión.</p>
+                </div>
+
+                <!-- Plasma Sanguíneo -->
+                <div onclick="showCompartmentDetail('plasma')" class="cursor-pointer transition transform hover:scale-[1.02] bg-amber-50 border border-amber-300 rounded-xl p-3 group">
+                  <div class="flex justify-between items-center text-xs font-bold text-amber-900">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-vial text-plasma"></i> Plasma Sanguíneo</span>
+                    <span class="text-amber-700 font-extrabold text-[11px]">20% del LEC</span>
+                  </div>
+                  <p class="text-[11px] text-amber-800 mt-1">Vehículo intravascular que transporta gases, nutrientes, fármacos y proteínas plasmáticas.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta dinámica de información pedagógica -->
+          <div id="compartment-info-box" class="bg-slate-100 border border-slate-200 rounded-xl p-3.5 transition-all text-xs text-slate-700 flex items-start gap-3">
+            <i class="fa-solid fa-lightbulb text-amber-500 text-lg mt-0.5"></i>
+            <div>
+              <h4 id="info-box-title" class="font-bold text-slate-800">El Medio Interno de Claude Bernard</h4>
+              <p id="info-box-desc" class="mt-0.5 text-slate-600">
+                El Líquido Extracelular es el ambiente inmediato en el que habitan las células. La enfermería vigila constantemente este medio: cualquier alteración de la hidratación o solutos en la sangre repercute en el intersticio y finalmente en el interior de cada célula corporal.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 2: DINÁMICA DE INTERCAMBIO MICROVASCULAR ==================== -->
+    <section id="modulo2" class="tab-content hidden space-y-6">
+      
+      <!-- Module 2 Intro Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-accent">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-accent text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-arrows-split-up-and-left"></i>
+              <span>Módulo 2 • Dinámica Fisiológica de Membranas</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">
+              Flujo Continuo y Bidireccional de Sustancias
+            </h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+              El cuerpo humano mantiene su vitalidad gracias a un <strong>tránsito constante e ininterrumpido</strong> a través del puente que representa el líquido intersticial. La homeostasis no es un estado estático, sino un <strong>equilibrio dinámico celular</strong>.
+            </p>
+          </div>
+          <div class="bg-accent-light border border-accent/30 p-3.5 rounded-xl flex items-center space-x-3 self-start md:self-auto shrink-0">
+            <i class="fa-solid fa-arrows-rotate text-accent text-2xl"></i>
+            <div>
+              <p class="text-[11px] text-accent uppercase font-bold">Tríada Microvascular</p>
+              <p class="text-xs text-slate-700 font-mono">Sangre &harr; Intersticio &harr; Célula</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulador visual en Canvas con controles interactivos -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-8 glass-card rounded-2xl p-5 border border-slate-200 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3 mb-4">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 rounded-full bg-red-500 animate-ping"></div>
+              <h3 class="font-bold text-slate-800 text-sm sm:text-base">Microcirculación Capilar - Intersticio - Célula</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="toggleAnimation()" id="anim-toggle-btn" class="px-3 py-1 bg-accent hover:bg-accent-hover text-white rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
+                <i class="fa-solid fa-pause"></i> <span>Pausar Flujo</span>
+              </button>
+              <button onclick="resetFlowParticles()" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 border border-slate-300">
+                <i class="fa-solid fa-rotate-right"></i> <span>Reiniciar</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Canvas interactivo de microcirculación -->
+          <div class="relative w-full h-80 bg-slate-900 rounded-xl overflow-hidden border border-slate-700 shadow-inner">
+            <canvas id="microvascularCanvas" class="w-full h-full block"></canvas>
+            
+            <!-- Etiquetas superpuestas descriptivas -->
+            <div class="absolute top-2 left-3 bg-red-600/80 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded border border-red-400">
+              Extremo Capilar Arterial
+            </div>
+            <div class="absolute bottom-2 left-3 bg-blue-600/80 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded border border-blue-400">
+              Extremo Capilar Venoso
+            </div>
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 bg-cyan-700/80 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded border border-cyan-400">
+              Líquido Intersticial (Medio Interno)
+            </div>
+            <div class="absolute top-2 right-3 bg-emerald-600/80 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-400">
+              Compartimento Intracelular (Célula)
+            </div>
+          </div>
+
+          <!-- Leyenda de partículas -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 text-xs font-medium">
+            <div class="flex items-center gap-2 p-2 bg-rose-50 border border-rose-200 rounded-lg text-rose-800">
+              <span class="w-3.5 h-3.5 rounded-full bg-rose-500 shadow-sm flex-shrink-0"></span>
+              <span><strong>Oxígeno ($O_2$)</strong> & Nutrientes</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-800">
+              <span class="w-3.5 h-3.5 rounded-full bg-amber-500 shadow-sm flex-shrink-0"></span>
+              <span><strong>Glucosa</strong> & Hormonas</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 bg-slate-100 border border-slate-300 rounded-lg text-slate-700">
+              <span class="w-3.5 h-3.5 rounded-full bg-slate-500 shadow-sm flex-shrink-0"></span>
+              <span><strong>Dióxido de Carbono</strong> ($CO_2$)</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 bg-indigo-50 border border-indigo-200 rounded-lg text-indigo-800">
+              <span class="w-3.5 h-3.5 rounded-full bg-indigo-500 shadow-sm flex-shrink-0"></span>
+              <span><strong>Desechos</strong> (Urea / Ácido)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Explicación pedagógica de los 2 sentidos de flujo -->
+        <div class="lg:col-span-4 space-y-4">
+          <!-- Sentido 1: Sangre a Célula -->
+          <div class="glass-card rounded-2xl p-4 border-l-4 border-l-rose-500 border-slate-200 space-y-2">
+            <div class="flex items-center gap-2 text-rose-700 font-bold text-sm">
+              <i class="fa-solid fa-arrow-right-long text-base"></i>
+              <span>De la Sangre a la Célula</span>
+            </div>
+            <div class="p-2 bg-rose-50/70 rounded-lg text-xs font-semibold text-rose-900 flex items-center justify-between">
+              <span>Capilar Sanguíneo</span> &rarr; <span>Intersticio</span> &rarr; <span>Célula</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              El torrente sanguíneo aporta <strong>oxígeno ($O_2$)</strong> captado en los pulmones, <strong>nutrientes</strong> absorbidos en el tubo digestivo y <strong>señales hormonales</strong>. Al pasar al intersticio, difunden a través de la membrana celular para mantener el metabolismo.
+            </p>
+          </div>
+
+          <!-- Sentido 2: Célula a Sangre -->
+          <div class="glass-card rounded-2xl p-4 border-l-4 border-l-blue-500 border-slate-200 space-y-2">
+            <div class="flex items-center gap-2 text-blue-700 font-bold text-sm">
+              <i class="fa-solid fa-arrow-left-long text-base"></i>
+              <span>De la Célula a la Sangre</span>
+            </div>
+            <div class="p-2 bg-blue-50/70 rounded-lg text-xs font-semibold text-blue-900 flex items-center justify-between">
+              <span>Célula</span> &rarr; <span>Intersticio</span> &rarr; <span>Vénula / Sangre</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Como resultado de la respiración celular y síntesis proteica, la célula expulsa <strong>$CO_2$ y metabolitos de desecho (urea, creatinina, protones)</strong> hacia el líquido intersticial, desde donde son reabsorbidos al capilar venoso hacia pulmones y riñones.
+            </p>
+          </div>
+
+          <!-- Principio Homeostático -->
+          <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-900 space-y-1.5">
+            <div class="font-bold flex items-center gap-1.5 text-amber-800">
+              <i class="fa-solid fa-scale-balanced text-amber-600"></i> ¿Qué es la Homeostasis?
+            </div>
+            <p class="leading-relaxed">
+              Es el <strong>equilibrio dinámico</strong> mediante el cual el organismo mantiene relativamente estables las condiciones físico-químicas del medio interno (temperatura, pH, osmolaridad, volumen hídrico) para asegurar la supervivencia celular.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 3: INTERDEPENDENCIA DE SISTEMAS ==================== -->
+    <section id="modulo3" class="tab-content hidden space-y-6">
+      
+      <!-- Module 3 Intro Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-accent">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-accent text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-heart-pulse"></i>
+              <span>Módulo 3 • Sinergia Biológica Holística</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">
+              Interdependencia de los Sistemas Corporales
+            </h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+              El cuerpo humano funciona como una <strong>unidad funcional integrada</strong>: ningún sistema opera de forma aislada. Para que la célula reciba sus fluidos y nutrientes en el medio interno, los sistemas cooperan de manera constante y simultánea.
+            </p>
+          </div>
+          <div class="bg-accent-light border border-accent/30 p-3.5 rounded-xl flex items-center space-x-3 self-start md:self-auto shrink-0">
+            <i class="fa-solid fa-network-wired text-accent text-2xl"></i>
+            <div>
+              <p class="text-[11px] text-accent uppercase font-bold">Unidad Funcional</p>
+              <p class="text-xs text-slate-700 font-mono">Control Neuroendocrino</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuadrante de Cooperación Sistémica -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Par Respiratorio - Cardiovascular -->
+        <div class="glass-card rounded-2xl p-6 border-t-4 border-t-rose-500 border-slate-200 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl font-bold">
+                <i class="fa-solid fa-lungs"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-rose-600 uppercase tracking-wide">Cooperación de Aporte y Transporte</span>
+                <h3 class="text-lg font-bold text-slate-800">Sistema Respiratorio & Cardiovascular</h3>
+              </div>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+              Trabajan en estrecha sincronía mecánica y química. Sin ventilación no hay oxígeno para la sangre; sin bomba cardíaca el oxígeno captado jamás llegaría al líquido intersticial de las células cerebrales, musculares o renales.
+            </p>
+
+            <div class="space-y-2 text-xs">
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-2.5">
+                <i class="fa-solid fa-wind text-sky-500 mt-0.5"></i>
+                <div>
+                  <strong class="text-slate-800">Aparato Respiratorio:</strong> Capta $O_2$ atmosférico mediante difusión alvéolo-capilar y elimina el $CO_2$ producido por el metabolismo tisular.
+                </div>
+              </div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-2.5">
+                <i class="fa-solid fa-heart-pulse text-rose-500 mt-0.5"></i>
+                <div>
+                  <strong class="text-slate-800">Aparato Cardiovascular:</strong> Genera la presión hidrostática (bomba) para impulsar el plasma sanguíneo cargado de gases, nutrientes y electrólitos a todo el árbol microvascular.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-rose-50 p-3 rounded-xl border border-rose-200 text-xs text-rose-900 font-medium flex items-center gap-2">
+            <i class="fa-solid fa-stethoscope text-rose-600 text-base"></i>
+            <span>Enfermería mide esta unión cada minuto: <strong>Frecuencia Cardíaca (FC)</strong> y <strong>Frecuencia Respiratoria (FR)</strong>.</span>
+          </div>
+        </div>
+
+        <!-- Par Nervioso - Endocrino -->
+        <div class="glass-card rounded-2xl p-6 border-t-4 border-t-indigo-500 border-slate-200 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl font-bold">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-indigo-600 uppercase tracking-wide">Coordinación, Control y Regulación</span>
+                <h3 class="text-lg font-bold text-slate-800">Sistema Nervioso & Sistema Endocrino</h3>
+              </div>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+              Son los grandes coordinadores corporales. Detectan desviaciones del medio interno y desencadenan respuestas compensatorias para restablecer los valores basales de la homeostasis.
+            </p>
+
+            <div class="space-y-2 text-xs">
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-2.5">
+                <i class="fa-solid fa-bolt text-amber-500 mt-0.5"></i>
+                <div>
+                  <strong class="text-slate-800">Sistema Nervioso:</strong> Regulación inmediata, veloz y precisa mediante impulsos bioeléctricos (reflejo barorreceptor, taquicardia refleja en hemorragias).
+                </div>
+              </div>
+              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-start gap-2.5">
+                <i class="fa-solid fa-dna text-indigo-500 mt-0.5"></i>
+                <div>
+                  <strong class="text-slate-800">Sistema Endocrino:</strong> Regulación sostenida, duradera y de amplio alcance mediante hormonas liberadas al plasma sanguíneo (hormona antidiurética [ADH], aldosterona, insulina).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-200 text-xs text-indigo-900 font-medium flex items-center gap-2">
+            <i class="fa-solid fa-notes-medical text-indigo-600 text-base"></i>
+            <span>Ante una deshidratación, el cerebro estimula la sed y la neurohipófisis secreta ADH para que el riñón retenga agua.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 4: APLICACIÓN CLÍNICA EN ENFERMERÍA ==================== -->
+    <section id="modulo4" class="tab-content hidden space-y-6">
+      
+      <!-- Module 4 Intro Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-accent">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-accent text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-user-nurse"></i>
+              <span>Módulo 4 • Traslación a la Cabecera del Paciente</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">
+              Aplicación Clínica y Práctica en Enfermería
+            </h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+              Para el profesional de enfermería de la Universidad Católica de Cuyo, la fisiología de los fluidos no es una fórmula abstracta: es el sustento científico para <strong>interpretar signos vitales</strong>, realizar el <strong>balance hídrico estricto</strong> y sostener una <strong>mirada holística</strong> del sujeto de cuidado.
+            </p>
+          </div>
+          <div class="bg-accent-light border border-accent/30 p-3.5 rounded-xl flex items-center space-x-3 self-start md:self-auto shrink-0">
+            <i class="fa-solid fa-scale-unbalanced text-accent text-2xl"></i>
+            <div>
+              <p class="text-[11px] text-accent uppercase font-bold">Herramienta de Guardia</p>
+              <p class="text-xs text-slate-700 font-mono">Balance = Ingresos − Egresos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pilares de Enfermería en Fluidos -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Pilar 1: Signos Vitales -->
+        <div class="glass-card rounded-2xl p-5 border border-slate-200 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-heart-pulse"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-800">1. Control de Signos Vitales</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Son <strong class="text-slate-800">ventanas cuantitativas</strong> del estado homeostático del paciente:
+          </p>
+          <ul class="text-xs space-y-2 text-slate-700">
+            <li class="p-2 bg-slate-50 rounded-lg border border-slate-200">
+              <strong class="text-rose-700">Presión Arterial (PA):</strong> Depende del volumen de plasma dentro del árbol vascular (volemia). Hipovolemia genera hipotensión.
+            </li>
+            <li class="p-2 bg-slate-50 rounded-lg border border-slate-200">
+              <strong class="text-rose-700">Frecuencia Cardíaca (FC):</strong> El corazón aumenta sus latidos (taquicardia compensatoria) para mantener la perfusión tisular ante la pérdida de líquidos.
+            </li>
+            <li class="p-2 bg-slate-50 rounded-lg border border-slate-200">
+              <strong class="text-rose-700">Frecuencia Respiratoria & Temp:</strong> Regulan la eliminación de $CO_2$, el equilibrio ácido-base y la termorregulación.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pilar 2: Balance Hídrico -->
+        <div class="glass-card rounded-2xl p-5 border border-slate-200 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-cyan-100 text-cyan-700 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-scale-unbalanced"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-800">2. Balance Hídrico (Ingresos vs Egresos)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Técnica exclusiva de enfermería para cuantificar los aportes y pérdidas de líquidos corporales en 24 horas:
+          </p>
+          
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-2">
+            <div class="text-emerald-700 font-bold flex items-center gap-1.5">
+              <i class="fa-solid fa-plus-circle"></i> Ingresos:
+            </div>
+            <p class="text-[11px] text-slate-600 pl-4">Vía oral (líquidos y alimentos), soluciones parenterales (suero intravenoso), medicamentos y agua endógena metabólica.</p>
+
+            <div class="text-rose-700 font-bold flex items-center gap-1.5 pt-1 border-t">
+              <i class="fa-solid fa-minus-circle"></i> Egresos:
+            </div>
+            <p class="text-[11px] text-slate-600 pl-4">Diuresis (orina), pérdidas insensibles (sudor y respiración cutánea/pulmonar), heces, drenajes quirúrgicos o vómitos.</p>
+          </div>
+
+          <div class="p-2.5 bg-cyan-50 rounded-xl border border-cyan-200 text-center text-xs font-black text-cyan-900">
+            Balance = Total Ingresos − Total Egresos
+          </div>
+        </div>
+
+        <!-- Pilar 3: Mirada Holística -->
+        <div class="glass-card rounded-2xl p-5 border border-slate-200 space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-bold">
+            <i class="fa-solid fa-person-circle-check"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-800">3. Mirada Holística del Sujeto</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            El paciente <strong>no es una colección de órganos fragmentados</strong>. Una pérdida hídrica a nivel vascular (diarrea severa o hemorragia) desata una cascada fisiológica completa:
+          </p>
+          <div class="space-y-2 text-xs text-slate-700">
+            <div class="flex items-center gap-2 p-2 bg-amber-50 rounded-lg border border-amber-200">
+              <i class="fa-solid fa-arrow-down-long text-amber-600 font-bold"></i>
+              <span>Cae el volumen de plasma (LEC intravascular).</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 bg-amber-50 rounded-lg border border-amber-200">
+              <i class="fa-solid fa-arrow-down-long text-amber-600 font-bold"></i>
+              <span>El líquido intersticial cede agua a los vasos para compensar.</span>
+            </div>
+            <div class="flex items-center gap-2 p-2 bg-amber-50 rounded-lg border border-amber-200">
+              <i class="fa-solid fa-arrow-down-long text-amber-600 font-bold"></i>
+              <span>La célula (LIC) pierde agua, deshidratándose y alterando su función vital.</span>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-500 italic mt-2">
+            La enfermera y el enfermero cuidan a la persona en su totalidad bio-psico-social.
+          </p>
+        </div>
+      </div>
+
+      <!-- Calculadora Interactiva de Balance Hídrico para Enfermería -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-200">
+        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-calculator text-accent"></i> Mini Taller Práctico: Calcula el Balance Hídrico de Sala
+        </h3>
+        <p class="text-xs text-slate-600 mb-4">
+          Ingresa los valores de un turno de guardia para determinar si el paciente se encuentra en balance positivo (riesgo de sobrecarga de fluidos/edema) o negativo (deshidratación/hipovolemia).
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="bg-emerald-50/60 p-4 rounded-xl border border-emerald-200 space-y-3">
+            <div class="font-bold text-emerald-900 flex items-center gap-2">
+              <i class="fa-solid fa-glass-water-droplet"></i> Ingresos Totales en 24h (mL)
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-slate-600 mb-1">Vía Oral / Alimentos (mL):</label>
+                <input type="number" id="input-oral" value="1200" class="w-full p-2 border rounded-lg font-bold text-slate-800 text-sm">
+              </div>
+              <div>
+                <label class="block text-slate-600 mb-1">Suero Endovenoso (mL):</label>
+                <input type="number" id="input-parenteral" value="1000" class="w-full p-2 border rounded-lg font-bold text-slate-800 text-sm">
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-rose-50/60 p-4 rounded-xl border border-rose-200 space-y-3">
+            <div class="font-bold text-rose-900 flex items-center gap-2">
+              <i class="fa-solid fa-toilet"></i> Egresos Totales en 24h (mL)
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-slate-600 mb-1">Diuresis / Orina (mL):</label>
+                <input type="number" id="input-diuresis" value="1500" class="w-full p-2 border rounded-lg font-bold text-slate-800 text-sm">
+              </div>
+              <div>
+                <label class="block text-slate-600 mb-1">Pérdidas Insensibles / Drenaje (mL):</label>
+                <input type="number" id="input-insensibles" value="800" class="w-full p-2 border rounded-lg font-bold text-slate-800 text-sm">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-4 p-4 bg-slate-900 text-white rounded-xl">
+          <div>
+            <span class="text-xs text-sky-300 font-bold uppercase tracking-wider block">Resultado del Balance:</span>
+            <div id="balance-result-display" class="text-xl font-extrabold text-white mt-0.5">
+              Balance: -100 mL (Leve balance negativo)
+            </div>
+            <p id="balance-clinical-feedback" class="text-xs text-slate-300 mt-1">
+              Pérdidas y aportes en rango de equilibrio fisiológico estándar.
+            </p>
+          </div>
+          <button onclick="calculateNursingBalance()" class="px-5 py-2.5 bg-accent hover:bg-accent-hover text-white rounded-xl font-bold text-xs transition shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-check-double"></i> Calcular Balance Clínico
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 5: SÍNTESIS DE NIVELES DE ORGANIZACIÓN ==================== -->
+    <section id="modulo5" class="tab-content hidden space-y-6">
+      
+      <!-- Module 5 Intro Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-accent">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-accent text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-cubes-stacked"></i>
+              <span>Módulo 5 • Jerarquía Biológica Estructural</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">
+              Síntesis de los Niveles de Organización
+            </h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+              Para comprender el medio interno y la homeostasis, la enfermería reconoce la arquitectura de la vida: desde la célula viva aislada hasta el organismo humano completo que interactúa con su entorno.
+            </p>
+          </div>
+          <div class="bg-accent-light border border-accent/30 p-3.5 rounded-xl flex items-center space-x-3 self-start md:self-auto shrink-0">
+            <i class="fa-solid fa-stairs text-accent text-2xl"></i>
+            <div>
+              <p class="text-[11px] text-accent uppercase font-bold">Escala Fisiológica</p>
+              <p class="text-xs text-slate-700 font-mono">Célula &rarr; Organismo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cadena de Niveles Jerárquicos -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+        <!-- 1. Célula -->
+        <div class="glass-card rounded-2xl p-4 border-2 border-emerald-300 text-center flex flex-col justify-between space-y-2 hover:shadow-md transition">
+          <div class="w-12 h-12 mx-auto rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-black">
+            1
+          </div>
+          <h4 class="font-extrabold text-slate-800 text-sm">Nivel Celular</h4>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            Unidad estructural y funcional más pequeña del ser vivo. Posee el Líquido Intracelular (LIC) con organelas y enzimas.
+          </p>
+          <span class="text-[10px] bg-emerald-50 text-emerald-800 font-bold py-1 px-2 rounded-full border border-emerald-200">
+            Ej: Miocito / Neurona
+          </span>
+        </div>
+
+        <!-- 2. Tejido -->
+        <div class="glass-card rounded-2xl p-4 border-2 border-cyan-300 text-center flex flex-col justify-between space-y-2 hover:shadow-md transition">
+          <div class="w-12 h-12 mx-auto rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center text-xl font-black">
+            2
+          </div>
+          <h4 class="font-extrabold text-slate-800 text-sm">Nivel Tisular</h4>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            Conjunto de células similares organizadas con matriz extracelular y bañadas por el Líquido Intersticial.
+          </p>
+          <span class="text-[10px] bg-cyan-50 text-cyan-800 font-bold py-1 px-2 rounded-full border border-cyan-200">
+            Ej: Tejido Conectivo
+          </span>
+        </div>
+
+        <!-- 3. Órgano -->
+        <div class="glass-card rounded-2xl p-4 border-2 border-sky-300 text-center flex flex-col justify-between space-y-2 hover:shadow-md transition">
+          <div class="w-12 h-12 mx-auto rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xl font-black">
+            3
+          </div>
+          <h4 class="font-extrabold text-slate-800 text-sm">Nivel de Órgano</h4>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            Estructura compuesta por dos o más tejidos que realizan funciones especializadas complejas en el organismo.
+          </p>
+          <span class="text-[10px] bg-sky-50 text-sky-800 font-bold py-1 px-2 rounded-full border border-sky-200">
+            Ej: Corazón / Riñón
+          </span>
+        </div>
+
+        <!-- 4. Sistemas y Aparatos -->
+        <div class="glass-card rounded-2xl p-4 border-2 border-indigo-300 text-center flex flex-col justify-between space-y-2 hover:shadow-md transition">
+          <div class="w-12 h-12 mx-auto rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl font-black">
+            4
+          </div>
+          <h4 class="font-extrabold text-slate-800 text-sm">Sistemas y Aparatos</h4>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            Grupo de órganos coordinados que llevan a cabo funciones biológicas globales integradas e interdependientes.
+          </p>
+          <span class="text-[10px] bg-indigo-50 text-indigo-800 font-bold py-1 px-2 rounded-full border border-indigo-200">
+            Ej: Aparato Cardiovascular
+          </span>
+        </div>
+
+        <!-- 5. Organismo -->
+        <div class="glass-card rounded-2xl p-4 border-2 border-amber-400 text-center flex flex-col justify-between space-y-2 hover:shadow-md transition">
+          <div class="w-12 h-12 mx-auto rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-black">
+            5
+          </div>
+          <h4 class="font-extrabold text-slate-800 text-sm">Organismo Vivo</h4>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            El ser humano en su totalidad, manteniendo la homeostasis de sus compartimientos en equilibrio con su entorno.
+          </p>
+          <span class="text-[10px] bg-amber-50 text-amber-800 font-bold py-1 px-2 rounded-full border border-amber-200">
+            Sujeto de Cuidado
+          </span>
+        </div>
+      </div>
+
+      <!-- Reflexión integradora para enfermería -->
+      <div class="p-5 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl flex items-center gap-4">
+        <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center text-2xl flex-shrink-0 shadow">
+          <i class="fa-solid fa-hand-holding-medical"></i>
+        </div>
+        <div class="text-xs sm:text-sm text-slate-700 space-y-1">
+          <strong class="text-blue-900 block font-bold">Principio Epistemológico del Cuidado Enfermero (UCCuyo):</strong>
+          <p>
+            Cuando tomas la presión arterial o administras un suero de hidratación a una persona en una cama hospitalaria, tu acción trasciende el nivel del órgano: estás restituyendo el volumen del <strong>plasma (LEC)</strong>, favoreciendo el flujo de nutrientes por el <strong>líquido intersticial</strong> y salvando a la <strong>célula (LIC)</strong> de la muerte por anoxia y desequilibrio homeostático.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 6: RETOS & EVALUACIÓN CLÍNICA (GAMIFICACIÓN) ==================== -->
+    <section id="retos" class="tab-content hidden space-y-6">
+      
+      <!-- Module 6 Intro Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-accent">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-accent text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-trophy text-amber-500"></i>
+              <span>Módulo 6 • Evaluación Práctica y Gamificación</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">
+              Retos de Simulación Clínica de Enfermería
+            </h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+              Supera los 3 retos interactivos para afianzar tus competencias como futuro estudiante de la Licenciatura en Enfermería de la UCCuyo y obtener tu medalla de especialista en Medio Interno.
+            </p>
+          </div>
+          <div class="bg-accent-light border border-accent/30 p-3.5 rounded-xl flex items-center space-x-3 self-start md:self-auto shrink-0 min-w-[140px] justify-center">
+            <i class="fa-solid fa-award text-amber-500 text-3xl"></i>
+            <div>
+              <p class="text-[10px] text-accent uppercase font-bold">Calificación</p>
+              <p id="challenge-score-display" class="text-xl font-black text-slate-800 font-mono">0 / 100</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RETO 1: EL MAPA DE LOS COMPARTIMIENTOS -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-accent-light text-accent font-bold flex items-center justify-center text-sm">R1</span>
+            <div>
+              <h3 class="font-bold text-slate-800 text-base">Reto 1: Clasificación de Fluidos Corporales</h3>
+              <p class="text-xs text-slate-500">Clasifica cada elemento biológico en su compartimiento correspondiente (LIC o LEC).</p>
+            </div>
+          </div>
+          <span class="text-xs font-extrabold text-accent bg-accent-light px-2.5 py-1 rounded-full border border-accent/30">
+            30 Puntos
+          </span>
+        </div>
+
+        <div id="r1-container" class="space-y-4">
+          <p class="text-xs text-slate-600">
+            Haz clic en la opción correcta para cada uno de los 3 fluidos biológicos:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Ítem 1 -->
+            <div id="r1-item-1" class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-tint text-amber-500"></i> Plasma Sanguíneo
+              </div>
+              <p class="text-[11px] text-slate-500">Porción líquida contenida en el lecho vascular.</p>
+              <div class="flex gap-2 pt-2">
+                <button onclick="answerR1(1, 'LIC')" class="w-1/2 py-1.5 text-xs font-bold rounded-lg border border-slate-300 hover:bg-slate-200 transition">Es LIC</button>
+                <button onclick="answerR1(1, 'LEC')" class="w-1/2 py-1.5 text-xs font-bold rounded-lg bg-accent hover:bg-accent-hover text-white transition">Es LEC</button>
+              </div>
+              <div id="r1-feedback-1" class="text-[11px] font-bold hidden pt-1"></div>
+            </div>
+
+            <!-- Ítem 2 -->
+            <div id="r1-item-2" class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-water text-cyan-500"></i> Líquido Intersticial
+              </div>
+              <p class="text-[11px] text-slate-500">Baña las células fuera de los vasos sanguíneos.</p>
+              <div class="flex gap-2 pt-2">
+                <button onclick="answerR1(2, 'LIC')" class="w-1/2 py-1.5 text-xs font-bold rounded-lg border border-slate-300 hover:bg-slate-200 transition">Es LIC</button>
+                <button onclick="answerR1(2, 'LEC')" class="w-1/2 py-1.5 text-xs font-bold rounded-lg bg-accent hover:bg-accent-hover text-white transition">Es LEC</button>
+              </div>
+              <div id="r1-feedback-2" class="text-[11px] font-bold hidden pt-1"></div>
+            </div>
+
+            <!-- Ítem 3 -->
+            <div id="r1-item-3" class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+              <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-dna text-emerald-500"></i> Citosol & Fluidos Intracelulares
+              </div>
+              <p class="text-[11px] text-slate-500">Ubicado en el interior de la membrana plasmática celular.</p>
+              <div class="flex gap-2 pt-2">
+                <button onclick="answerR1(3, 'LIC')" class="w-1/2 py-1.5 text-xs font-bold rounded-lg bg-accent hover:bg-accent-hover text-white transition">Es LIC</button>
+                <button onclick="answerR1(3, 'LEC')" class="w-1/2 py-1.5 text-xs font-bold rounded-lg border border-slate-300 hover:bg-slate-200 transition">Es LEC</button>
+              </div>
+              <div id="r1-feedback-3" class="text-[11px] font-bold hidden pt-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RETO 2: EL PUENTE DE INTERCAMBIO MICROVASCULAR -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-800 font-bold flex items-center justify-center text-sm">R2</span>
+            <div>
+              <h3 class="font-bold text-slate-800 text-base">Reto 2: Secuenciador del Flujo de Oxígeno y Desechos</h3>
+              <p class="text-xs text-slate-500">Ordena la ruta anatómica del flujo continuo e interdependiente.</p>
+            </div>
+          </div>
+          <span class="text-xs font-extrabold text-cyan-700 bg-cyan-50 px-2.5 py-1 rounded-full border border-cyan-200">
+            30 Puntos
+          </span>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Pregunta A: Nutrición y Oxigenación -->
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+            <label class="block text-xs font-bold text-slate-800">
+              Caso A: ¿Cuál es el orden secuencial correcto para que el $O_2$ captado en la respiración alcance el citoplasma celular?
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button onclick="answerR2A(1)" id="r2a-opt-1" class="p-3 text-left bg-white border border-slate-300 hover:border-accent rounded-xl text-xs transition">
+                <strong>Opción 1:</strong><br> Sangre arterial &rarr; Célula &rarr; Líquido intersticial
+              </button>
+              <button onclick="answerR2A(2)" id="r2a-opt-2" class="p-3 text-left bg-white border border-slate-300 hover:border-accent rounded-xl text-xs transition">
+                <strong>Opción 2:</strong><br> Sangre arterial &rarr; Líquido intersticial &rarr; Célula
+              </button>
+              <button onclick="answerR2A(3)" id="r2a-opt-3" class="p-3 text-left bg-white border border-slate-300 hover:border-accent rounded-xl text-xs transition">
+                <strong>Opción 3:</strong><br> Líquido intersticial &rarr; Sangre venosa &rarr; Célula
+              </button>
+            </div>
+            <div id="r2a-feedback" class="text-xs font-semibold hidden"></div>
+          </div>
+
+          <!-- Pregunta B: Depuración metabólica -->
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+            <label class="block text-xs font-bold text-slate-800">
+              Caso B: ¿Cuál es el trayecto de depuración que sigue el $CO_2$ y la urea producidos por el metabolismo celular?
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <button onclick="answerR2B(1)" id="r2b-opt-1" class="p-3 text-left bg-white border border-slate-300 hover:border-accent rounded-xl text-xs transition">
+                <strong>Opción 1:</strong><br> Célula &rarr; Líquido Intersticial &rarr; Capilar Venoso
+              </button>
+              <button onclick="answerR2B(2)" id="r2b-opt-2" class="p-3 text-left bg-white border border-slate-300 hover:border-accent rounded-xl text-xs transition">
+                <strong>Opción 2:</strong><br> Célula &rarr; Sangre Arterial &rarr; Intersticio
+              </button>
+              <button onclick="answerR2B(3)" id="r2b-opt-3" class="p-3 text-left bg-white border border-slate-300 hover:border-accent rounded-xl text-xs transition">
+                <strong>Opción 3:</strong><br> Intersticio &rarr; Célula &rarr; Sangre Venosa
+              </button>
+            </div>
+            <div id="r2b-feedback" class="text-xs font-semibold hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RETO 3: CASOS CLÍNICOS DE ENFERMERÍA EN SALA -->
+      <div class="glass-card rounded-2xl p-6 border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-sm">R3</span>
+            <div>
+              <h3 class="font-bold text-slate-800 text-base">Reto 3: Juicio Clínico & Paciente Deshidratado</h3>
+              <p class="text-xs text-slate-500">Resuelve dos situaciones reales en la guardia hospitalaria.</p>
+            </div>
+          </div>
+          <span class="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+            40 Puntos
+          </span>
+        </div>
+
+        <div class="space-y-5">
+          <!-- CASO 1 -->
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-extrabold text-blue-900 bg-blue-100 px-2 py-0.5 rounded">Caso Clínico 1: Guardia de Adultos</span>
+            </div>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Un paciente de 68 años ingresa a la guardia con diarrea y vómitos profusos de 24 horas de evolución. Presenta signos vitales: <strong>Presión Arterial: 85/50 mmHg (Hipotensión)</strong>, <strong>Frecuencia Cardíaca: 118 lpm (Taquicardia)</strong>, sequedad de mucosas y piel turgente disminuida.
+            </p>
+            <div class="space-y-2">
+              <p class="text-xs font-bold text-slate-800">
+                1. ¿Qué compartimiento hídrico experimenta la pérdida inicial y desencadena la caída de la presión arterial?
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <button onclick="answerR3A(1)" id="r3a-1" class="p-2.5 text-xs text-left bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition">
+                  A) El Líquido Intracelular (LIC) únicamente.
+                </button>
+                <button onclick="answerR3A(2)" id="r3a-2" class="p-2.5 text-xs text-left bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition">
+                  B) El Plasma sanguíneo del Líquido Extracelular (LEC).
+                </button>
+                <button onclick="answerR3A(3)" id="r3a-3" class="p-2.5 text-xs text-left bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition">
+                  C) Ninguno, el cuerpo no pierde fluidos extracelulares.
+                </button>
+              </div>
+              <div id="r3a-feedback" class="text-xs font-semibold hidden"></div>
+            </div>
+          </div>
+
+          <!-- CASO 2 -->
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-extrabold text-blue-900 bg-blue-100 px-2 py-0.5 rounded">Caso Clínico 2: Compensación Homeostática</span>
+            </div>
+            <p class="text-xs text-slate-700 leading-relaxed">
+              Frente a este paciente deshidratado con hipovolemia, ¿qué sistemas orgánicos se coordinan de forma sinérgica inmediata y sostenida para restablecer la presión arterial y conservar el agua corporal?
+            </p>
+            <div class="space-y-2">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <button onclick="answerR3B(1)" id="r3b-1" class="p-2.5 text-xs text-left bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition">
+                  A) Solo el sistema esquelético y muscular pasivo.
+                </button>
+                <button onclick="answerR3B(2)" id="r3b-2" class="p-2.5 text-xs text-left bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition">
+                  B) El Sistema Nervioso (taquicardia refleja) y Endocrino (liberación de ADH / retención de agua renal).
+                </button>
+                <button onclick="answerR3B(3)" id="r3b-3" class="p-2.5 text-xs text-left bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition">
+                  C) Los sistemas corporales se desconectan sin interactuar entre sí.
+                </button>
+              </div>
+              <div id="r3b-feedback" class="text-xs font-semibold hidden"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDALLA DE RECONOCIMIENTO / CERTIFICADO DE LOGRO -->
+      <div id="diploma-card" class="hidden bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 rounded-2xl p-6 text-white text-center shadow-xl space-y-4 animate-pulse-soft">
+        <div class="w-20 h-20 mx-auto rounded-full bg-white text-amber-600 flex items-center justify-center text-4xl shadow-lg border-4 border-amber-200">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="space-y-1">
+          <span class="text-xs uppercase font-bold tracking-widest text-amber-100">Universidad Católica de Cuyo • Facultad de Ciencias Médicas</span>
+          <h3 class="text-2xl sm:text-3xl font-black">¡Felicitaciones, Futuro/a Colega de Enfermería!</h3>
+          <p class="text-sm text-amber-100 max-w-xl mx-auto">
+            Has completado satisfactoriamente los retos de simulación clínica sobre <strong>Compartimientos Líquidos Corporales, Medio Interno e Integración Sistémica</strong> con un puntaje sobresaliente.
+          </p>
+        </div>
+        <div class="inline-block bg-white/20 backdrop-blur px-6 py-2 rounded-full border border-white/30 text-base font-extrabold tracking-wide">
+          Distinción: Especialista en Medio Interno y Fluidos Clínicos
+        </div>
+        <div class="pt-2">
+          <button onclick="window.print()" class="px-5 py-2.5 bg-white text-amber-800 hover:bg-amber-50 font-bold text-xs rounded-xl shadow transition">
+            <i class="fa-solid fa-print mr-1.5"></i> Imprimir / Guardar Constancia de Logro
+          </button>
+        </div>
+      </div>
+    </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER CANÓNICO ==================== -->
+  <footer class="bg-white border-t border-gray-200 py-3 text-center text-xs text-gray-500 font-medium">
+    Desarrollado por vesalio - Todos los derechos reservados
+  </footer>
+
+  <!-- ==================== MODAL 1: VADEMÉCUM CONCEPTUAL ==================== -->
+  <div id="modal-formulas" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-gray-200">
+      <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-accent-light text-accent flex items-center justify-center font-bold text-sm">
+            <i class="fa-solid fa-book-medical"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-gray-900">Vademécum Conceptual de Fluidos y Medio Interno</h3>
+            <p class="text-[11px] text-gray-500 font-mono">Fórmulas Biofísicas, Proporciones y Constantes</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-formulas')" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto custom-scrollbar space-y-4 text-xs text-gray-700">
+        <!-- 1 -->
+        <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200">
+          <h4 class="font-bold text-accent text-xs mb-1">1. Ecuación Fundamental del Agua Corporal Total (ACT)</h4>
+          <p class="mb-2">El agua corporal total representa aproximadamente el 60% del peso en un adulto sano de referencia:</p>
+          <div class="p-2.5 bg-white rounded-lg border border-gray-200 font-mono text-center text-xs text-gray-800">
+            $$\text{ACT} = \text{LIC (67\%)} + \text{LEC (33\%)} \quad \left[\text{LEC} = \text{Intersticio (80\%)} + \text{Plasma (20\%)}\right]$$
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200">
+          <h4 class="font-bold text-accent text-xs mb-1">2. Tríada de Difusión Microvascular</h4>
+          <p class="mb-2">Flujo continuo bidireccional donde el líquido intersticial constituye el puente biofísico obligado:</p>
+          <div class="p-2.5 bg-white rounded-lg border border-gray-200 font-mono text-center text-xs text-gray-800">
+            $$\text{Aporte: Capilar Arterial} \xrightarrow{O_2,\,\text{Glucosa}} \text{Intersticio} \longrightarrow \text{Célula}$$
+            $$\text{Depuración: Célula} \xrightarrow{CO_2,\,\text{Urea}} \text{Intersticio} \longrightarrow \text{Capilar Venoso}$$
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200">
+          <h4 class="font-bold text-accent text-xs mb-1">3. Ecuación Clínica del Balance Hídrico en Enfermería</h4>
+          <p class="mb-2">Cuantificación cuantitativa en hoja de enfermería durante 24 horas:</p>
+          <div class="p-2.5 bg-white rounded-lg border border-gray-200 font-mono text-center text-xs text-gray-800">
+            $$\text{Balance Hídrico} = \sum \text{Ingresos (Vía Oral + Parenteral)} - \sum \text{Egresos (Diuresis + Pérdidas Insensibles)}$$
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200">
+          <h4 class="font-bold text-accent text-xs mb-1">4. Ventanas Cuantitativas y Constantes Fisiológicas</h4>
+          <div class="grid grid-cols-2 gap-2 text-[11px] font-mono text-gray-600">
+            <div class="p-2 bg-white rounded border border-gray-200"><strong>Presión Arterial (PA):</strong> ~120/80 mmHg</div>
+            <div class="p-2 bg-white rounded border border-gray-200"><strong>Frecuencia Cardíaca (FC):</strong> 60 - 100 lpm</div>
+            <div class="p-2 bg-white rounded border border-gray-200"><strong>Frecuencia Respiratoria:</strong> 12 - 20 rpm</div>
+            <div class="p-2 bg-white rounded border border-gray-200"><strong>Diuresis Normal:</strong> 0.5 - 1.0 mL/kg/hora</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-3 border-t border-gray-100 bg-gray-50 rounded-b-2xl flex justify-end">
+        <button onclick="closeModal('modal-formulas')" class="px-4 py-2 bg-accent text-white text-xs font-bold rounded-lg hover:bg-accent-hover transition">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: GUÍA DE USO ==================== -->
+  <div id="modal-tutorial" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[88vh] flex flex-col shadow-2xl border border-gray-200">
+      <div class="bg-accent p-4 text-white flex items-center justify-between rounded-t-2xl">
+        <div class="flex items-center gap-2.5">
+          <i class="fa-solid fa-circle-question text-xl"></i>
+          <div>
+            <h3 class="text-sm font-bold leading-tight">Guía de Uso del Simulador | Compartimientos Líquidos</h3>
+            <p class="text-[11px] text-accent-light font-mono">Curso de Ingreso a la Licenciatura en Enfermería &bull; FCM UCCuyo</p>
+          </div>
+        </div>
+        <button onclick="closeModal('modal-tutorial')" class="text-white hover:text-gray-200 p-1 rounded-lg transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto custom-scrollbar space-y-5 text-xs text-gray-700 leading-relaxed">
+        
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-bullseye"></i> 1. Propósito Formativo del Simulador
+          </h4>
+          <p>
+            Diseñado para aspirantes a la carrera de Licenciatura en Enfermería (FCM - Universidad Católica de Cuyo). Su objetivo es consolidar el dominio de la distribución del agua corporal total (LIC y LEC), comprender el lecho intersticial como puente obligatorio de intercambio molecular, reconocer la sinergia de los sistemas cardiovascular, respiratorio, nervioso y endocrino, y trasladar estos principios biológicos a la cabecera del paciente mediante el control de signos vitales y el balance hídrico.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-layer-group"></i> 2. Módulos Temáticos de Aprendizaje
+          </h4>
+          <ul class="list-disc list-inside space-y-2 text-gray-600">
+            <li><strong>Módulo 1 (Agua Corporal Total - ACT):</strong> Ecuación $\text{ACT} = \text{LIC} + \text{LEC}$. Calculadora dinámica con slider de peso corporal para evaluar volúmenes de líquido celular, intersticial y plasmático en tiempo real con panel de solutos.</li>
+            <li><strong>Módulo 2 (Flujo Microvascular Bidireccional):</strong> Simulador Canvas en tiempo real de la microcirculación capilar. Muestra el tránsito continuo de $O_2$ y nutrientes hacia la célula, y la depuración venosa de $CO_2$ y urea pasando obligadamente por el líquido intersticial.</li>
+            <li><strong>Módulo 3 (Sinergia e Interdependencia Sistémica):</strong> Analiza la cooperación entre los aparatos respiratorio y cardiovascular (aporte y transporte de gases) y los sistemas nervioso y endocrino (regulación bioeléctrica rápida vs. hormonal sostenida vía ADH/aldosterona).</li>
+            <li><strong>Módulo 4 (Práctica de Enfermería & Balance Hídrico):</strong> Interpretación clínica de signos vitales (PA, FC, FR, Temp), fundamentación de la mirada holística ante la cascada de deshidratación celular, y calculadora interactiva para registrar balances de guardia hospitalaria.</li>
+            <li><strong>Módulo 5 (Niveles de Organización):</strong> Secuencia jerárquica integrada: Célula $\rightarrow$ Tejido $\rightarrow$ Órgano $\rightarrow$ Sistemas $\rightarrow$ Organismo en Homeostasis.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-compass"></i> 3. Navegación e Interacción
+          </h4>
+          <p class="mb-2">
+            Utiliza el menú lateral izquierdo (o barra superior en dispositivos móviles) para desplazarte de forma no lineal entre los módulos teóricos y los desafíos prácticos:
+          </p>
+          <ul class="list-disc list-inside space-y-1 text-gray-600">
+            <li><strong>Vademécum Teórico:</strong> Acceso permanente en la cabecera superior a las ecuaciones cuantitativas fundamentales (distribución hídrica, tríada de difusión y balance hídrico).</li>
+            <li><strong>Controles Interactivos:</strong> Prueba variaciones con el control deslizante de masa corporal (kg), los controles de animación del lecho vascular (pausar/reanudar y reiniciar) y los campos de cálculo de ingresos y egresos.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-gamepad"></i> 4. Estación de Retos Clínicos de Enfermería (3 Desafíos)
+          </h4>
+          <ul class="list-disc list-inside space-y-2 text-gray-600">
+            <li><strong>Reto 1 (Clasificación de Fluidos):</strong> Identifica si el plasma, el intersticio y el citosol corresponden al LIC o al LEC (+30 pts).</li>
+            <li><strong>Reto 2 (Secuenciador del Flujo de Intercambio):</strong> Ordena el trayecto anatómico correcto de oxigenación y eliminación metabólica (+30 pts).</li>
+            <li><strong>Reto 3 (Casos Clínicos en Guardia):</strong> Analiza a un paciente deshidratado con hipotensión y taquicardia para deducir el compartimiento inicialmente comprometido y la respuesta compensatoria neuroendocrina (+40 pts).</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-medal"></i> 5. Distinción de Honor Simbólico
+          </h4>
+          <p>
+            Al alcanzar 90 puntos o más en los retos prácticos, se desbloquea el diploma de honor <strong>"Especialista en Medio Interno y Fluidos Clínicos"</strong> con opción para imprimir o guardar como constancia PDF.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="p-3 border-t border-gray-100 bg-gray-50 rounded-b-2xl flex justify-end">
+        <button onclick="closeModal('modal-tutorial')" class="px-4 py-2 bg-accent text-white text-xs font-bold rounded-lg hover:bg-accent-hover transition">Comenzar Simulación</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT DE CONTROL Y SIMULADOR ==================== -->
+  <script>
+    // ESTADO GLOBAL DE PUNTUACIÓN Y RETOS
+    let state = {
+      score: 0,
+      r1: { 1: false, 2: false, 3: false },
+      r2: { a: false, b: false },
+      r3: { a: false, b: false }
+    };
+
+    // CONTROL DE MODALES
+    function openFormulasModal() {
+      openModal('modal-formulas');
+    }
+
+    function openTutorial() {
+      openModal('modal-tutorial');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        if (window.renderMathInElement) {
+          renderMathInElement(modal, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false },
+              { left: '\\(', right: '\\)', display: false },
+              { left: '\\[', right: '\\]', display: true }
+            ],
+            throwOnError: false
+          });
+        }
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('hidden');
+      }
+    }
+
+    // NAVEGACIÓN ENTRE PESTAÑAS (SIDEBAR)
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(section => {
+        section.classList.add('hidden');
+        section.classList.remove('block');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      const activeSection = document.getElementById(tabId);
+      if (activeSection) {
+        activeSection.classList.remove('hidden');
+        activeSection.classList.add('block');
+      }
+
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+      }
+
+      // Si se abre el módulo 2, redibujar canvas
+      if (tabId === 'modulo2') {
+        setTimeout(initCanvasSize, 50);
+      }
+    }
+
+    // MODAL
+    function toggleModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.toggle('hidden');
+    }
+
+    // ACTUALIZADOR DE PESO Y VOLÚMENES (MÓDULO 1)
+    const weightSlider = document.getElementById('weight-slider');
+    const weightDisplay = document.getElementById('weight-display');
+    const actVal = document.getElementById('act-val');
+    const licVal = document.getElementById('lic-val');
+    const lecVal = document.getElementById('lec-val');
+    const interstitialVal = document.getElementById('interstitial-val');
+    const plasmaVal = document.getElementById('plasma-val');
+
+    function updateVolumes(weight) {
+      weightDisplay.textContent = `${weight} kg`;
+      const act = weight * 0.60;
+      const lic = act * (2 / 3);
+      const lec = act * (1 / 3);
+      const interstitial = lec * 0.80;
+      const plasma = lec * 0.20;
+
+      actVal.textContent = `${act.toFixed(1)} Litros`;
+      licVal.textContent = `${lic.toFixed(1)} Litros`;
+      lecVal.textContent = `${lec.toFixed(1)} Litros`;
+      interstitialVal.textContent = `${interstitial.toFixed(1)} L`;
+      plasmaVal.textContent = `${plasma.toFixed(1)} L`;
+    }
+
+    if (weightSlider) {
+      weightSlider.addEventListener('input', (e) => {
+        updateVolumes(parseFloat(e.target.value));
+      });
+    }
+
+    // DETALLES PEDAGÓGICOS AL HACER CLIC EN COMPARTIMIENTOS
+    function showCompartmentDetail(type) {
+      const title = document.getElementById('info-box-title');
+      const desc = document.getElementById('info-box-desc');
+
+      if (type === 'lic') {
+        title.textContent = 'Líquido Intracelular (LIC) - 67% del Agua Corporal';
+        desc.textContent = 'Es el compartimiento más voluminoso. Se encuentra confinado dentro de las membranas celulares. Contiene agua, iones esenciales como potasio y magnesio, fosfatos, glucosa y proteínas enzimáticas indispensables para la síntesis celular y el metabolismo energético.';
+      } else if (type === 'intersticio') {
+        title.textContent = 'Líquido Intersticial - 80% del Líquido Extracelular';
+        desc.textContent = 'Es el fluido que baña y nutre directamente el espacio entre las células. Funciona como un auténtico puente biológico: ninguna molécula de oxígeno o glucosa puede llegar de la sangre a la célula sin atravesar primero este espacio intersticial.';
+      } else if (type === 'plasma') {
+        title.textContent = 'Plasma Sanguíneo - 20% del Líquido Extracelular';
+        desc.textContent = 'Es el componente líquido no celular de la sangre que circula dentro del lecho vascular. Transporta albúmina, anticuerpos, electrolitos, gases y nutrientes impulsado por la contracción del músculo cardíaco.';
+      }
+    }
+
+    // MINI CALCULADORA DE BALANCE HÍDRICO (MÓDULO 4)
+    function calculateNursingBalance() {
+      const oral = parseFloat(document.getElementById('input-oral').value) || 0;
+      const parenteral = parseFloat(document.getElementById('input-parenteral').value) || 0;
+      const diuresis = parseFloat(document.getElementById('input-diuresis').value) || 0;
+      const insensibles = parseFloat(document.getElementById('input-insensibles').value) || 0;
+
+      const totalIngresos = oral + parenteral;
+      const totalEgresos = diuresis + insensibles;
+      const balance = totalIngresos - totalEgresos;
+
+      const display = document.getElementById('balance-result-display');
+      const feedback = document.getElementById('balance-clinical-feedback');
+
+      let colorClass = 'text-white';
+      let msg = '';
+
+      if (balance > 500) {
+        msg = `Balance Positivo Marcado (+${balance} mL). Riesgo de retención de líquidos o edema agudo. Vigilar ingurgitación yugular y campos pulmonares.`;
+        display.innerHTML = `<span class="text-amber-400">+${balance} mL</span> (Balance Positivo)`;
+      } else if (balance < -500) {
+        msg = `Balance Negativo Marcado (${balance} mL). Pérdida hídrica no compensada. Riesgo de hipovolemia, taquicardia refleja y deshidratación celular.`;
+        display.innerHTML = `<span class="text-rose-400">${balance} mL</span> (Balance Negativo)`;
+      } else {
+        msg = `Balance Neutro / Estable (${balance >= 0 ? '+' : ''}${balance} mL). Aportes y pérdidas en adecuado equilibrio fisiológico homeostático.`;
+        display.innerHTML = `<span class="text-emerald-400">${balance >= 0 ? '+' : ''}${balance} mL</span> (Equilibrio Hídrico)`;
+      }
+
+      feedback.textContent = msg;
+    }
+
+    // ==================== CANVAS SIMULADOR MICROVASCULAR (MÓDULO 2) ====================
+    const canvas = document.getElementById('microvascularCanvas');
+    const ctx = canvas.getContext('2d');
+    let animationRunning = true;
+    let particles = [];
+    let animId = null;
+
+    function initCanvasSize() {
+      if (!canvas) return;
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      createParticles();
+    }
+
+    function createParticles() {
+      particles = [];
+      const count = Math.floor(canvas.width / 18);
+
+      // Partículas Nutritivas (O2 y Glucosa): Sangre -> Intersticio -> Célula
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * (canvas.width * 0.25),
+          y: Math.random() * canvas.height,
+          vx: 0.6 + Math.random() * 0.9,
+          vy: (Math.random() - 0.5) * 0.6,
+          type: Math.random() > 0.5 ? 'o2' : 'glucose',
+          radius: 3.5,
+          color: Math.random() > 0.5 ? '#f43f5e' : '#f59e0b'
+        });
+      }
+
+      // Partículas de Desecho (CO2 y Urea): Célula -> Intersticio -> Capilar Venoso
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: canvas.width * 0.75 + Math.random() * (canvas.width * 0.2),
+          y: Math.random() * canvas.height,
+          vx: -(0.6 + Math.random() * 0.9),
+          vy: (Math.random() - 0.5) * 0.6,
+          type: Math.random() > 0.5 ? 'co2' : 'waste',
+          radius: 3.5,
+          color: Math.random() > 0.5 ? '#94a3b8' : '#818cf8'
+        });
+      }
+    }
+
+    function drawMicrocirculation() {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 1. ZONA VASCULAR (CAPILAR SANGUÍNEO) - Izquierda
+      const gradCapillary = ctx.createLinearGradient(0, 0, 0, h);
+      gradCapillary.addColorStop(0, 'rgba(239, 68, 68, 0.25)'); // Extremo arterial
+      gradCapillary.addColorStop(1, 'rgba(59, 130, 246, 0.25)'); // Extremo venoso
+      ctx.fillStyle = gradCapillary;
+      ctx.fillRect(0, 0, w * 0.28, h);
+
+      // Pared endotelial con fenestraciones
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 3;
+      ctx.setLineDash([8, 6]); // Representa poros endoteliales
+      ctx.beginPath();
+      ctx.moveTo(w * 0.28, 0);
+      ctx.lineTo(w * 0.28, h);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // 2. ZONA INTERSTICIAL (LÍQUIDO INTERSTICIAL) - Centro
+      ctx.fillStyle = 'rgba(6, 182, 212, 0.08)';
+      ctx.fillRect(w * 0.28, 0, w * 0.44, h);
+
+      // Fibras de colágeno intersticial de fondo
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.15)';
+      ctx.lineWidth = 1;
+      for (let y = 30; y < h; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(w * 0.29, y);
+        ctx.bezierCurveTo(w * 0.45, y + 15, w * 0.55, y - 15, w * 0.71, y);
+        ctx.stroke();
+      }
+
+      // 3. ZONA CELULAR (LÍQUIDO INTRACELULAR) - Derecha
+      ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
+      ctx.beginPath();
+      ctx.roundRect(w * 0.72, 20, w * 0.26, h - 40, [24]);
+      ctx.fill();
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Núcleo celular
+      ctx.fillStyle = 'rgba(5, 150, 105, 0.35)';
+      ctx.beginPath();
+      ctx.arc(w * 0.85, h / 2, 28, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '10px Inter';
+      ctx.textAlign = 'center';
+      ctx.fillText('Núcleo', w * 0.85, h / 2 + 4);
+
+      // Flechas de dirección general de difusión
+      ctx.fillStyle = 'rgba(244, 63, 94, 0.4)';
+      ctx.font = 'bold 11px Inter';
+      ctx.fillText('Aporte Nutritivo: O2 y Glucosa →', w * 0.50, h * 0.25);
+
+      ctx.fillStyle = 'rgba(129, 140, 248, 0.6)';
+      ctx.fillText('← Eliminación: CO2 y Desechos', w * 0.50, h * 0.78);
+
+      // Dibujar y actualizar partículas
+      particles.forEach(p => {
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (animationRunning) {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Si partícula nutritiva llega a la célula, se reinicia en el lecho arterial
+          if (p.vx > 0 && p.x > w * 0.82) {
+            p.x = 10 + Math.random() * (w * 0.15);
+            p.y = Math.random() * (h * 0.45);
+          }
+          // Si partícula de desecho llega al capilar venoso, se reinicia en la célula
+          if (p.vx < 0 && p.x < w * 0.15) {
+            p.x = w * 0.75 + Math.random() * (w * 0.18);
+            p.y = h * 0.5 + Math.random() * (h * 0.45);
+          }
+
+          // Rebote superior e inferior
+          if (p.y <= 10 || p.y >= h - 10) {
+            p.vy *= -1;
+          }
+        }
+      });
+
+      animId = requestAnimationFrame(drawMicrocirculation);
+    }
+
+    function toggleAnimation() {
+      animationRunning = !animationRunning;
+      const btn = document.getElementById('anim-toggle-btn');
+      if (btn) {
+        btn.innerHTML = animationRunning 
+          ? '<i class="fa-solid fa-pause"></i> <span>Pausar Flujo</span>'
+          : '<i class="fa-solid fa-play"></i> <span>Reanudar Flujo</span>';
+      }
+    }
+
+    function resetFlowParticles() {
+      createParticles();
+    }
+
+    // ==================== GAMIFICACIÓN Y VALIDACIÓN DE RETOS ====================
+    function addScore(points) {
+      state.score += points;
+      const globalBadge = document.getElementById('global-score');
+      const challengeBadge = document.getElementById('challenge-score-display');
+      if (globalBadge) globalBadge.textContent = `${state.score} pts`;
+      if (challengeBadge) challengeBadge.textContent = `${state.score} / 100`;
+
+      if (state.score >= 90) {
+        const diploma = document.getElementById('diploma-card');
+        if (diploma) diploma.classList.remove('hidden');
+      }
+    }
+
+    // RETO 1
+    function answerR1(item, chosen) {
+      if (state.r1[item]) return; // Ya respondido
+      const feedback = document.getElementById(`r1-feedback-${item}`);
+      feedback.classList.remove('hidden');
+
+      const correct = (item === 1 && chosen === 'LEC') ||
+                      (item === 2 && chosen === 'LEC') ||
+                      (item === 3 && chosen === 'LIC');
+
+      if (correct) {
+        state.r1[item] = true;
+        feedback.className = 'text-[11px] font-bold pt-1 text-emerald-600 block';
+        feedback.textContent = '¡Correcto! +10 puntos.';
+        addScore(10);
+      } else {
+        feedback.className = 'text-[11px] font-bold pt-1 text-rose-600 block';
+        feedback.textContent = item === 3 ? 'Recuerda: El citosol celular es Líquido Intracelular (LIC).' : 'Recuerda: Tanto el plasma como el intersticio pertenecen al Líquido Extracelular (LEC).';
+      }
+    }
+
+    // RETO 2
+    function answerR2A(option) {
+      if (state.r2.a) return;
+      const fb = document.getElementById('r2a-feedback');
+      fb.classList.remove('hidden');
+
+      if (option === 2) {
+        state.r2.a = true;
+        fb.className = 'text-xs font-bold text-emerald-700 block';
+        fb.innerHTML = '¡Exacto! Sangre arterial &rarr; Líquido intersticial &rarr; Célula. El intersticio es el puente ineludible. (+15 pts)';
+        document.getElementById('r2a-opt-2').classList.add('bg-emerald-50', 'border-emerald-500');
+        addScore(15);
+      } else {
+        fb.className = 'text-xs font-bold text-rose-600 block';
+        fb.textContent = 'Incorrecto. La sangre nunca toca a la célula tisular directamente sin atravesar primero el líquido intersticial.';
+      }
+    }
+
+    function answerR2B(option) {
+      if (state.r2.b) return;
+      const fb = document.getElementById('r2b-feedback');
+      fb.classList.remove('hidden');
+
+      if (option === 1) {
+        state.r2.b = true;
+        fb.className = 'text-xs font-bold text-emerald-700 block';
+        fb.innerHTML = '¡Excelente! Célula &rarr; Líquido Intersticial &rarr; Capilar Venoso para depuración pulmonar y renal. (+15 pts)';
+        document.getElementById('r2b-opt-1').classList.add('bg-emerald-50', 'border-emerald-500');
+        addScore(15);
+      } else {
+        fb.className = 'text-xs font-bold text-rose-600 block';
+        fb.textContent = 'Incorrecto. Los desechos se originan en el metabolismo intracelular y salen al intersticio antes de reabsorberse en la microcirculación venosa.';
+      }
+    }
+
+    // RETO 3
+    function answerR3A(option) {
+      if (state.r3.a) return;
+      const fb = document.getElementById('r3a-feedback');
+      fb.classList.remove('hidden');
+
+      if (option === 2) {
+        state.r3.a = true;
+        fb.className = 'text-xs font-bold text-emerald-700 block';
+        fb.innerHTML = '¡Brillante razonamiento clínico! La deshidratación aguda agota primeramente el plasma del LEC (hipovolemia), provocando la caída de la presión arterial. (+20 pts)';
+        document.getElementById('r3a-2').classList.add('bg-emerald-50', 'border-emerald-500');
+        addScore(20);
+      } else {
+        fb.className = 'text-xs font-bold text-rose-600 block';
+        fb.textContent = 'Piénsalo de nuevo: La pérdida por vómitos y diarrea compromete de forma inmediata el volumen intravascular del LEC.';
+      }
+    }
+
+    function answerR3B(option) {
+      if (state.r3.b) return;
+      const fb = document.getElementById('r3b-feedback');
+      fb.classList.remove('hidden');
+
+      if (option === 2) {
+        state.r3.b = true;
+        fb.className = 'text-xs font-bold text-emerald-700 block';
+        fb.innerHTML = '¡Respuesta de excelencia! El sistema nervioso actúa con taquicardia inmediata y el endocrino retiene agua vía ADH y aldosterona para proteger el medio interno. (+20 pts)';
+        document.getElementById('r3b-2').classList.add('bg-emerald-50', 'border-emerald-500');
+        addScore(20);
+      } else {
+        fb.className = 'text-xs font-bold text-rose-600 block';
+        fb.textContent = 'Recuerda el Módulo 3: El sistema nervioso y endocrino son los directores de orquesta del control homeostático.';
+      }
+    }
+
+    // INICIALIZACIÓN GENERAL EN WINDOW.ONLOAD
+    window.onload = function() {
+      updateVolumes(70);
+      initCanvasSize();
+      window.addEventListener('resize', initCanvasSize);
+      drawMicrocirculation();
+
+      // Renderizar fórmulas KaTeX iniciales
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+          ],
+          throwOnError: false
+        });
+      }
+    };
+  </script>
+</body>
+</html>
